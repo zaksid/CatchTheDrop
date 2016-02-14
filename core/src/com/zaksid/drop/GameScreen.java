@@ -8,7 +8,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -18,30 +17,30 @@ import com.badlogic.gdx.utils.TimeUtils;
 import java.util.Iterator;
 
 public class GameScreen implements Screen {
-   private final Drop game;
+    private final Drop game;
 
     private final int BUCKET_WIDTH = 64;
     private final int BUCKET_HEIGHT = 64;
     private final int SPAWN_INTERVAL = 1000000000;
-    OrthographicCamera camera;
-    SpriteBatch batch;
-    Texture dropImage;
-    Texture bucketImage;
-    Sound dropSound;
-    Music rainMusic;
-    Rectangle bucket;
-    Vector3 touchPosition;
-    Array<Rectangle> raindrops;
-    long lastDropTime;
-    int caughtDrops;
+
+    private OrthographicCamera camera;
+    private Texture dropImage;
+    private Texture bucketImage;
+    private Sound dropSound;
+    private Music rainMusic;
+    private Rectangle bucket;
+    private Vector3 touchPosition;
+    private Array<Rectangle> raindrops;
+
+    private long lastDropTime;
+    private int caughtDrops;
+    private int spawnedDrops;
 
     public GameScreen(final Drop game) {
         this.game = game;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Drop.SCREEN_WIDTH, Drop.SCREEN_HEIHGT);
-
-        batch = new SpriteBatch();
+        camera.setToOrtho(false, Drop.SCREEN_WIDTH, Drop.SCREEN_HEIGHT);
 
         touchPosition = new Vector3();
 
@@ -72,7 +71,7 @@ public class GameScreen implements Screen {
 
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.font.draw(game.batch, "Drops caught: " + caughtDrops, 0, 480);
+        game.font.draw(game.batch, "Drops caught: " + caughtDrops + " of " + spawnedDrops, 0, 480);
         game.batch.draw(bucketImage, bucket.x, bucket.y);
 
         for (Rectangle raindrop : raindrops) {
@@ -97,7 +96,7 @@ public class GameScreen implements Screen {
             bucket.x = 0;
 
         if (bucket.x > Drop.SCREEN_WIDTH - BUCKET_WIDTH)
-            bucket.x =  Drop.SCREEN_WIDTH - BUCKET_WIDTH;
+            bucket.x = Drop.SCREEN_WIDTH - BUCKET_WIDTH;
 
         if (TimeUtils.nanoTime() - lastDropTime > SPAWN_INTERVAL)
             spawnRaindrop();
@@ -151,10 +150,11 @@ public class GameScreen implements Screen {
     private void spawnRaindrop() {
         Rectangle raindrop = new Rectangle();
         raindrop.x = MathUtils.random(0, Drop.SCREEN_WIDTH - BUCKET_WIDTH);
-        raindrop.y = Drop.SCREEN_HEIHGT;
+        raindrop.y = Drop.SCREEN_HEIGHT;
         raindrop.width = 64;
         raindrop.height = 64;
         raindrops.add(raindrop);
         lastDropTime = TimeUtils.nanoTime();
+        spawnedDrops++;
     }
 }

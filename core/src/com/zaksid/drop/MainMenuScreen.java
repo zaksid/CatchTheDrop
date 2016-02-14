@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class MainMenuScreen implements Screen {
 
-    private static final String CATCH_DROPS = "Catch the drops";
+    private static final String CATCH_DROPS = "Tap to start";
 
     final Drop game;
     OrthographicCamera camera;
@@ -15,7 +15,7 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final Drop game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Drop.SCREEN_WIDTH, Drop.SCREEN_HEIHGT);
+        camera.setToOrtho(false, Drop.SCREEN_WIDTH, Drop.SCREEN_HEIGHT);
     }
 
     @Override

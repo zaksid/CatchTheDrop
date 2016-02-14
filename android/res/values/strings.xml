@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Drop</string>
-    <string name="menu_text">Catch drops</string>
+    <string name="app_name">Catch drops</string>
+    <string name="menu_text">Tap to start</string>
 
 </resources>
