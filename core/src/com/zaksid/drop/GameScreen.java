@@ -71,7 +71,8 @@ public class GameScreen implements Screen {
 
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.font.draw(game.batch, "Drops caught: " + caughtDrops + " of " + spawnedDrops, 0, 480);
+        String caughtDropsInfo = String.format("Drops caught: %d of %d ", caughtDrops, spawnedDrops);
+        game.font.draw(game.batch, caughtDropsInfo, 0, 480);
         game.batch.draw(bucketImage, bucket.x, bucket.y);
 
         for (Rectangle raindrop : raindrops) {
